@@ -1,3 +1,5 @@
+> ⚠️ **仓库上传状态 / Upload status (2026-10-22):** 当前仓库先公开研究文档及校验摘要。实验版的全部源码、启动脚本与 Windows x64 编译文件尚未完整提交到 GitHub；README 中提到的 `src/` 与 Releases 资源目前可能尚不存在。请勿将当前仓库视为可直接构建或可下载的完整发行版。
+
 # LegacyEdgeSync
 
 > **实验性兼容性研究 / Experimental compatibility research**  
