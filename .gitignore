@@ -1,0 +1,17 @@
+# User accounts / browser profiles / logs / debug dumps
+Edge109SyncFix-Test/
+User Data/
+*.dmp
+*.mdmp
+*.pml
+*netlog*.json
+*NetLog*.json
+*status.txt
+*.log
+*.tmp
+*.pdb
+*.ilk
+*.obj
+*.o
+.vs/
+.idea/
