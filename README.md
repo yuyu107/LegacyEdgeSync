@@ -1,73 +1,138 @@
-> ⚠️ **仓库上传状态 / Upload status (2026-10-22):** 当前仓库先公开研究文档及校验摘要。实验版的全部源码、启动脚本与 Windows x64 编译文件尚未完整提交到 GitHub；README 中提到的 `src/` 与 Releases 资源目前可能尚不存在。请勿将当前仓库视为可直接构建或可下载的完整发行版。
-
 # LegacyEdgeSync
 
-> **实验性兼容性研究 / Experimental compatibility research**  
-> 在 Windows 7 SP1 x64 上恢复 Microsoft Edge 109.0.1518.140 的 Microsoft 账户同步。本项目与微软无关，不提供浏览器安全更新。
+**旧版 Microsoft Edge 云同步兼容性修复研究**  
+*Experimental cloud sync compatibility patch for legacy Microsoft Edge.*
 
-**状态：v0.1-test3 — 已在一台 Windows 7 SP1 x64 虚拟机中验证核心功能；非稳定版。**
+[![Release](https://img.shields.io/github/v/release/yuyu107/LegacyEdgeSync?include_prereleases&label=Pre-release)](https://github.com/yuyu107/LegacyEdgeSync/releases)
+[![Platform](https://img.shields.io/badge/Verified-Windows%207%20SP1%20x64-blue)](#兼容性与测试结果)
+[![Status](https://img.shields.io/badge/Status-Experimental-orange)](#注意事项与已知限制)
 
-## 项目背景
+> [!WARNING]
+> **本项目目前是实验性研究原型，不是稳定版。** 当前仅在 Windows 7 SP1 x64 + Microsoft Edge **109.0.1518.140 x64** 上完成验证。Edge 109 已停止常规安全更新；本工具不会提供浏览器安全修复。建议只在有快照的虚拟机中使用，且不要开启密码、支付信息等敏感数据同步。
 
-Microsoft Edge 109 目前连接微软同步服务时，可能遇到以下问题：
+## 项目简介
 
-- 默认同步发现端点 `/sync/v2/feeds/me/settings/homeCloud` 返回 HTTP 404。
-- 在指定可用同步地址后，服务端可能返回 `UPGRADE_CLIENT`：`Client version not supported. Please upgrade to version 133 or later.`
+由于 Microsoft Edge 109 使用的旧同步发现接口失效，以及微软同步服务器的客户端版本要求，Windows 7 上的 Edge 109 可能无法正常同步收藏夹等数据。
 
-本研究使用 `--sync-url` 参数绕过旧发现端点，并尝试在进程内对 `X-AFS-ClientInfo` 请求头的 `appVer` 进行**临时、等长替换**。仅针对经过验证的具体构建版本；不会修改磁盘上的微软 Edge 安装文件。
+**LegacyEdgeSync** 尝试通过独立启动器及进程内运行时修复模块，让经过验证的旧版 Edge 重新使用其原生云同步功能。
 
-**版本号覆盖不等于 Edge 133，也不包含 Edge 133 的安全补丁或所有同步协议特性。**
+- **无需 Fiddler 或 x64dbg**：不必使用 HTTPS 解密代理、手动修改内存或保持调试器附加。
+- **运行时修复**：启动时指定同步服务器地址，并对特定同步请求头的客户端版本字段做条件替换。
+- **不修改原版 Edge 文件**：不会永久修改磁盘上的 `msedge.dll`。
+- **独立测试配置文件**：避免直接修改默认 Edge 用户配置；提供 Hook 状态与命中计数供诊断。
 
-## 已验证的环境与结果（2026-10-22）
+> 这里的版本字段替换只是解决当前观测到的服务端版本门槛，**不等于将 Edge 109 升级为 Edge 133**，也不保证所有同步数据类型兼容。
 
-| 测试 | 结果 |
+## 下载
+
+### [**下载 v0.1-test3（实验性预发布版本）**](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.1-test3)
+
+**当前 Release 附件：** [`Edge109-SyncFix-v0.1-test3-Win7-x64.zip`](https://github.com/yuyu107/LegacyEdgeSync/releases/download/v0.1-test3/Edge109-SyncFix-v0.1-test3-Win7-x64.zip)
+
+GitHub Releases：[查看全部版本](https://github.com/yuyu107/LegacyEdgeSync/releases)
+
+> 压缩包内仍使用早期开发名称 `Edge109SyncFix.exe` 和 `Edge109SyncHook.dll`，属于正常情况；项目对外名称已统一为 **LegacyEdgeSync**。
+
+## 兼容性与测试结果
+
+| 项目 | 当前状态 |
 | --- | --- |
-| Windows 7 SP1 64 位 + Edge 109.0.1518.140 x64 | 已验证 |
-| 不运行 Fiddler / x64dbg，独立启动器 + DLL Hook | 已验证 |
-| Hook 状态 `hits=3, patched=3, skipped=0` | 已观察到 |
-| `Transport State: Active`、`Disable Reasons: None` | 已观察到 |
-| 收藏夹同步（此前包括双向验证） | 已验证 |
-| 保留登录态、重启 Windows 7 后再次启动修复器 | 已验证一次 |
-| 连续多次重启、长时间稳定性、Windows 8.1 和其他构建号 | **未验证** |
-| 密码和支付信息同步 | **不推荐测试** |
+| Windows 7 SP1 64 位 | ✅ 已验证 |
+| Microsoft Edge 109.0.1518.140 x64 | ✅ 已验证 |
+| 无 Fiddler / x64dbg 的独立修复 | ✅ 已验证 |
+| 云同步连接恢复 | ✅ 已验证 |
+| 收藏夹双向同步（Win7 与 Win11） | ✅ 已验证 |
+| 重启 Windows 7 后，保留登录状态继续同步 | ✅ 已验证一次 |
+| 连续多次重启、长期稳定性 | 🧪 待进一步测试 |
+| Windows 8.1 / 32 位系统 | ❔ 尚未验证 |
+| 其他 Edge 版本 | ❔ 尚未验证 |
+| 密码及支付信息同步 | ⚠️ 不建议测试 |
 
-早期 `test2` 在重启后曾出现 `INSTALLED` 但 `hits=0, patched=0` 与 `UPGRADE_CLIENT`。 `test3` 删除了启动后的固定 2.5 秒延迟，并在一次重启复测中恢复同步。**尚不能确认完全消除了竞态。**
+在已验证的环境中，`edge://sync-internals/` 曾显示：
 
-## 使用方法（只建议测试虚拟机）
+```text
+Transport State: Active
+Disable Reasons: None
+Server Connection: OK
+```
 
-1. 准备 Windows 7 SP1 x64 和 **Edge 109.0.1518.140 x64**，建立快照。使用专用测试账户，关闭密码/支付信息同步。
-2. 退出所有 Edge 进程；关闭 Fiddler 和 x64dbg。
-3. 从 Releases 获取 `LegacyEdgeSync-v0.1-test3-Win7-x64.zip`，完整解压，保留 `Edge109SyncFix.exe` 和 `Edge109SyncHook.dll` 在同一目录。
-4. 运行 `01-Launch-Test.cmd`。工具会使用 `%TEMP%\Edge109SyncFix-Test` 独立用户配置目录。
-5. 运行 `02-Show-Status.cmd`，查看 `INSTALLED`、`pid`、`hits`、`patched`、`skipped`。
-6. 登录测试账户，打开 `edge://sync-internals/`，检查 `Active`、`Server Connection: OK`、`Last Synced` 与实际收藏夹同步。
-7. 在 Win7 与另一台受支持设备上分别新建、修改专用测试收藏夹，验证双向同步；重启系统再测试。
+修复模块也曾记录：
 
-`INSTALLED` 仅代表 Hook 报告已安装，**不代表服务器已接受或同步一定成功**。若 `hits=0`，可能错过了首个同步请求，或尚未执行目标代码。
+```text
+INSTALLED: hook active, experimental build
+hits=3
+patched=3
+skipped=0
+```
 
-## 原理概要
+**注意：** `INSTALLED` 只表示 Hook 已报告安装成功。必须结合 `hits`、`patched`、实际同步状态和跨设备数据变化判断修复是否真正生效；`hits=0` 可能表示修复尚未命中或错过了首个同步请求。
 
-- `--sync-url=https://edge.microsoft.com/sync/v1/feeds/me/syncEntities` 指向实测可用同步端点。
-- 单独的 `X-AFS-ClientInfo` 请求头携带 `appVer=109.0.1518.140`；修改普通 User-Agent 无效。
-- 只针对已验证版本，检查 `msedge.dll` 的 PE 架构、版本路径及 RVA `0x8AF3D95` 处机器码，再对内存中的版本字段做等长覆盖为 `133.0.3065.120`。
-- 启动器和 Hook 为原生 x64 Windows 程序；不安装 HTTPS 解密根证书，不更改磁盘上的 Edge DLL。
-- 状态日志仅主动记录修复计数、PID 和安装结果，不主动写入同步内容或令牌。
+## 使用方法
 
-研究经过、复现与限制分别见 [RESEARCH](docs/RESEARCH.md)、[TESTING](docs/TESTING.md)、[RELEASE_NOTES](docs/RELEASE_NOTES.md)。
+1. 准备 **Windows 7 SP1 x64**，并安装 **Microsoft Edge 109.0.1518.140 x64**。建议先创建虚拟机快照。
+2. 从 [v0.1-test3 Release](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.1-test3) 下载压缩包，**完整解压**到一个文件夹。
+3. 完全退出 Edge，并确认没有残留的 `msedge.exe` 进程。
+4. 保持 `Edge109SyncFix.exe` 和 `Edge109SyncHook.dll` 位于同一目录。
+5. 运行 `01-Launch-Test.cmd`，使用实验性启动器启动 Edge。
+6. 运行 `02-Show-Status.cmd`，检查 `INSTALLED`、`pid`、`hits`、`patched` 与 `skipped`。
+7. 在启动的 Edge 测试配置文件中登录**专用测试微软账户**，打开 `edge://sync-internals/`，查看同步状态。
+8. 在 Win7 和另一台受支持的设备之间新增或修改**专用测试收藏夹**，确认更改能双向到达；随后重启 Win7 再测试一次。
 
-## 安全与限制
+启动器使用 `%TEMP%\Edge109SyncFix-Test` 独立用户数据目录。测试结束后可先备份所需内容，关闭所有测试 Edge 进程，再手动清理该目录。**直接双击普通 Edge 快捷方式不保证应用修复。**
 
-- **仅供研究，不适合日常浏览或生产环境。** Edge 109 已停止安全更新。
-- 程序使用 `CreateRemoteThread` 加载 DLL，在运行中进程打机器码跳转；存在多线程竞态、兼容性与崩溃风险。
-- 当前仅验证指定的 Edge x64 构建。其他浏览器版本、Windows 8.1、32 位系统均未验证。
-- **不要同步密码、支付信息**，不要使用主力账户；绝不要通过禁用安全防护来强行运行。
-- 不要上传账号邮箱、Token、浏览器用户目录、原始 NetLog 或内存转储到 Issues。
-- 关闭测试 Edge 进程即可清除进程内修改；测试配置留在 `%TEMP%\Edge109SyncFix-Test`，自行备份和清理。
+## 技术原理
 
-## 许可证与商标
+当前研究确认了两项影响 Edge 109 同步的因素：
 
-**暂未设置许可证。** 代码可供阅读，但公开代码不代表自动授予再分发或商业使用许可。Microsoft Edge 为微软商标，本项目非微软官方项目。
+1. 旧的 `/sync/v2/feeds/me/settings/homeCloud` 同步发现接口在测试时返回 HTTP 404；通过 `--sync-url` 指向实测可用的同步地址，可绕过发现环节。
+2. 服务端可能进一步返回 `UPGRADE_CLIENT`，要求更高客户端版本。版本来自 `X-AFS-ClientInfo` 中的 `appVer`，修改普通 User-Agent 无法解决。
+
+实验性 Hook 在特定 `msedge.dll` 构建中验证目标机器码及内存字符串后，将 `appVer=109.0.1518.140` **等长**替换为 `appVer=133.0.3065.120`。这属于临时的进程内修改，不涉及证书注入或磁盘上 Edge DLL 的替换。
+
+更多技术背景见 [研究记录](docs/RESEARCH.md)。
+
+## v0.1-test3 更新摘要
+
+- 移除 v0.1-test2 启动后固定等待 2.5 秒的机制，改为尽早安装 Hook，改善重启后自动同步的成功率。
+- 在状态信息中增加 PID，帮助确认修复模块所在的 Edge 进程。
+- 保留目标版本、机器码及待修改字符串检查。
+- 在 Windows 7 SP1 x64 测试环境中验证了同步恢复，以及一次重启后的再次同步。
+
+[查看完整 Release 说明](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.1-test3)
+
+## 注意事项与已知限制
+
+- **仅供研究及测试**，尚未进行充分的稳定性与安全性审计。运行时注入和机器码 Hook 存在多线程竞态、启动时序及崩溃风险。
+- 当前只验证了一个特定的 Edge x64 构建，其他 Edge 版本或其他操作系统可能不适用。
+- **不要启用密码、支付信息同步**，也不要在主力微软账户中测试。请先备份重要收藏夹。
+- Edge 109 已停止安全更新；本项目不能代替更新浏览器及操作系统。
+- 不应以关闭防病毒防护、降低系统安全设置等方式强行运行。
+- 报告问题时，**不要公开邮箱、身份验证令牌、未经脱敏的 NetLog、浏览器用户数据或内存转储**。
+- Microsoft 服务端行为可能变化，即使同版本 Edge 之后也可能再次无法同步。
+
+## 项目资料与反馈
+
+- [源码（src/）](src/)
+- [研究记录（RESEARCH.md）](docs/RESEARCH.md)
+- [测试指南（TESTING.md）](docs/TESTING.md)
+- [版本说明（RELEASE_NOTES.md）](docs/RELEASE_NOTES.md)
+- [反馈问题（Issues）](https://github.com/yuyu107/LegacyEdgeSync/issues)
+- [实验版下载（Releases）](https://github.com/yuyu107/LegacyEdgeSync/releases)
+
+目前的公开源码与 Release 已上传。若你遇到问题，请在 Issue 中说明 Windows 版本、Edge **完整版本号**、补丁状态及复现步骤，并对诊断信息进行脱敏。
+
+## 许可证与声明
+
+目前仓库尚未添加开源许可证。代码公开仅供查看和研究，**不代表自动获得再分发或商业使用授权**。
+
+Microsoft Edge 是 Microsoft 的商标。本项目是独立的兼容性研究项目，**与 Microsoft 无关，也未经 Microsoft 认可或支持**。
 
 ---
 
-**English:** LegacyEdgeSync is an experimental, build-specific Windows 7 x64 proof of concept for restoring Microsoft Edge 109 cloud sync. The tested launcher injects a runtime hook that rewrites a sync-specific client version field. One clean Windows 7 VM and reboot test passed. It is **not** a security update, a general Edge 133 compatibility layer, or a production-ready tool. Do not use it for passwords or sensitive data.
+### English summary
+
+LegacyEdgeSync is an **experimental, build-specific proof of concept** for restoring Microsoft Edge cloud sync on Windows 7 SP1 x64. Testing has confirmed successful sync with Edge **109.0.1518.140 x64**, including bookmark synchronization and one successful test after a Windows reboot.
+
+The launcher uses a runtime hook to rewrite a specific client-version field in sync requests. It **does not** update Edge's security components, guarantee compatibility with other Edge versions, or support production use.
+
+**[Download experimental v0.1-test3](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.1-test3)** · **[Report an issue](https://github.com/yuyu107/LegacyEdgeSync/issues)**
