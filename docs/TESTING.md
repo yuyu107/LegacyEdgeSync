@@ -1,4 +1,6 @@
-# 测试指南 / 复现模板
+# v0.1-test3 历史 x64 测试指南 / 复现模板
+
+> 这是最初的 Win7 x64 测试记录，不应误认为当前整合版唯一支持的环境。v0.3-test7 请优先参照 [当前回归清单](TESTING-v0.3-test7.md) 与 [Release](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.3-test7)。
 
 **前置条件**：已做 VMware 快照；Windows 7 SP1 x64；Edge 109.0.1518.140 x64；测试账户；Fiddler 和 x64dbg 均关闭。切勿进行密码/支付信息同步。
 

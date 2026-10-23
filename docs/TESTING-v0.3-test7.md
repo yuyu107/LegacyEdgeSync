@@ -1,4 +1,6 @@
-# v0.3-test7 release checklist (not a stable release)
+# v0.3-test7 published pre-release regression checklist
+
+**Release published:** [v0.3-test7](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.3-test7) — this checklist remains open; publication does not imply completed regression.
 
 ## Static checks
 

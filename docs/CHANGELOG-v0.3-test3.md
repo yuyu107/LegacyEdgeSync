@@ -8,6 +8,6 @@
 - 新建独立测试配置目录 `LegacyEdgeSync-x86-TestProfile-test3`，避免与已成功的 test2 共用配置。
 - 只修改启动器与文档，不更换 x86 Hook 算法；x64 直接沿用既有多语言构建。
 
-**验证状态：** x86 v0.3-test2 Hook 同步连接成功已获截图证据；v0.3-test3 新 UI、正常配置和备份模式尚需实机验证。不要提前称为稳定版。
+**后续验证补充：** x86 v0.3-test2 Hook 的同步连接成功有实机截图证据；用户后来反馈 v0.3-test3 的**原有配置模式也成功同步**。但三语言各环境、备份边界条件和长期稳定性仍需完整回归。
 
-**注意：** 该说明页记录本地实验构建，当前 `main` 分支的 `src/` 仍是 x64 源码；新 x86 源码须另行同步至 `src/x86/`。GitHub Releases 尚未发布 v0.3-test3。
+**版本归档：** v0.3-test3 未单独发布 GitHub Release；其 x86 源码已同步至 [`src/x86/`](../src/x86/)。当前公开预发布是 [v0.3-test7](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.3-test7)，整包仍需回归。
