@@ -4,11 +4,11 @@
 *Experimental Microsoft Edge cloud sync compatibility patch for legacy Windows.*
 
 [![Release](https://img.shields.io/github/v/release/yuyu107/LegacyEdgeSync?include_prereleases&label=Pre-release)](https://github.com/yuyu107/LegacyEdgeSync/releases)
-[![Windows 7 x64](https://img.shields.io/badge/Verified-Windows%207%20SP1%20x64-blue)](#兼容性与验证情况)
+[![Windows 7](https://img.shields.io/badge/Research-Windows%207%20x86%20%2B%20x64-blue)](#兼容性与验证情况)
 [![Status](https://img.shields.io/badge/Status-Experimental-orange)](#已知问题与注意事项)
 
 > [!WARNING]
-> **实验性研究项目，并非正式稳定版。** 已验证环境为 **Windows 7 SP1 x64 + Microsoft Edge 109.0.1518.140 x64**。Edge 109 已停止安全更新，本项目不能提供新版浏览器的安全修复。建议只在有快照的虚拟机中使用测试账户，不要同步密码或支付信息。
+> **实验性研究项目，并非正式稳定版。** 已验证环境包括 **Windows 7 SP1 x64 + Microsoft Edge 109.0.1518.140 x64**，以及 **Windows 7 SP1 x86 + Microsoft Edge 109.0.1518.140 x86** 的三路径 Hook 和同步连接实验。最新 x86 菜单启动器尚待回归测试。Edge 109 已停止安全更新，本项目不能提供新版浏览器的安全修复。建议只在有快照的虚拟机中使用测试账户，不要同步密码或支付信息。
 
 ## 项目简介
 
@@ -28,20 +28,21 @@ LegacyEdgeSync 通过**指定同步地址 + 进程内运行时兼容补丁**，�
 | 渠道 | 版本 | 当前状态 |
 | --- | --- | --- |
 | **[GitHub Releases](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.1-test3)** | `v0.1-test3` | 已发布的实验性预发布版；主要使用独立测试配置 |
-| **[main 分支源码](src/)** | `v0.2-test3` | 已同步多语言启动器源码和双模式功能；**尚未创建对应 GitHub Release** |
+| **[main 分支 x64 源码](src/)** | `v0.2-test3` | 已同步多语言启动器源码和双模式功能；**尚未创建对应 GitHub Release** |
+| **x86 实验版（待同步源码）** | `v0.3-test3` | v0.3-test2 三路径 Hook 已在 Win7 x86 上实测同步；v0.3-test3 新菜单、原有配置和备份功能待回归，当前未发布 GitHub Release |
 
 **当前已发布的二进制文件：**  
 [`Edge109-SyncFix-v0.1-test3-Win7-x64.zip`](https://github.com/yuyu107/LegacyEdgeSync/releases/download/v0.1-test3/Edge109-SyncFix-v0.1-test3-Win7-x64.zip)
 
 > 项目已更名为 **LegacyEdgeSync**，但内部程序仍使用 `Edge109SyncFix.exe` 和 `Edge109SyncHook.dll`。这是正常的开发阶段命名，并不是不同项目。
 
-**请区分：** `v0.2-test3` 的源码已在 GitHub，但不能因此认为 Releases 提供的 `v0.1-test3` ZIP 具有最新版菜单和多语言功能。后续确认测试结果后再发布新的预发布包。
+**请区分：** `v0.2-test3` 的 **x64** 源码已在 GitHub；新增 x86 的 `v0.3-test3` 源码及二进制测试包还需通过 GitHub Desktop 同步/发布。目前 Releases 提供的 `v0.1-test3` ZIP **不包含**新版菜单、三语言或 x86 支持。后续确认测试结果后再发布新的预发布包。
 
-## 当前开发功能（v0.2-test3 源码）
+## 当前开发功能（x64 v0.2-test3 / x86 v0.3-test3）
 
 | 功能 | 说明 |
 | --- | --- |
-| 云同步兼容补丁 | 仅对已验证的 Edge 109 x64 构建尝试进行运行时请求头修复 |
+| 云同步兼容补丁 | 针对 Edge 109.0.1518.140 的指定 x64 / x86 构建分别实现运行时请求头修复；**EXE/DLL 不可跨架构混用** |
 | **正常配置模式** | 使用 Edge 原有用户配置、收藏夹和登录状态 |
 | **独立测试模式** | 使用单独的临时配置目录，避免直接操作现有用户配置 |
 | 中文与英文提示 | 根据 Windows 当前用户显示语言自动选择 **简体中文、繁體中文或 English** |
@@ -52,7 +53,7 @@ LegacyEdgeSync 通过**指定同步地址 + 进程内运行时兼容补丁**，�
 
 **语言判断：** 使用 `GetUserDefaultUILanguage()` 获取 Windows 用户界面显示语言，简体中文（大陆／新加坡）采用简体提示，繁体中文（台湾／香港／澳门）采用繁體提示，其他系统语言默认英文。可以使用 `--lang` 参数手动检查三套文本；语言切换不会改变 Edge 或 Windows 的语言设置。
 
-详细内容：[多语言使用与测试](docs/MULTILINGUAL.md) · [v0.2-test3 更新记录](docs/CHANGELOG-v0.2-test3.md)。
+详细内容：[x64 多语言使用与测试](docs/MULTILINGUAL.md) · [x64 v0.2-test3 更新记录](docs/CHANGELOG-v0.2-test3.md) · [x86 v0.3-test3 变更](docs/CHANGELOG-v0.3-test3.md) · [x86 回归测试清单](docs/TESTING-x86-v0.3-test3.md)。
 
 ## 如何使用
 
@@ -90,6 +91,14 @@ Edge109SyncFix.exe --menu --lang=en
 
 不传 `--lang` 则自动检测系统显示语言。**注意：** 当前仓库仅公开此测试版源码，`v0.2-test3` 二进制尚未作为 GitHub Release 发布。原有配置模式会接触真实的本地及云端收藏夹，务必提前备份。
 
+### Win7 32 位：x86 v0.3-test3 实验包
+
+前一个实验版本 **v0.3-test2** 在 Windows 7 SP1 x86 + Edge 109.0.1518.140 x86 上，已经通过截图确认三路径 Hook 的 `installed_sites=3`、`hits=18`、`patched=18`、`skipped=0`；其中 `setterB_patched=4`、`format_patched=14`。Edge 同步页面显示 `Server Connection: OK`、`Last Synced: Just now` 和 `Commit Request`。仍须继续测试跨设备完整数据一致性及重启后的稳定性。
+
+**v0.3-test3** 以**未经改动的 v0.3-test2 x86 Hook DLL** 为核心，只扩展外部启动器：增加简体中文 / 繁體中文 / English 自动检测、独立测试、原有 Edge 配置模式（需 `YES`）、Robocopy 备份以及 Hook 进程状态提示。**新增启动器尚未完成 Win7 x86 实机回归，也没有创建正式 Release。** 当前 x86 源码还需从 GitHub Desktop 同步到 `src/x86/`。
+
+x86 实验所需详细测试内容见：[v0.3-test3 更新记录](docs/CHANGELOG-v0.3-test3.md) 和 [Win7 x86 回归清单](docs/TESTING-x86-v0.3-test3.md)。
+
 ## 兼容性与验证情况
 
 以下为**项目测试中实际确认的结果**，不是对所有系统或账户的兼容性承诺：
@@ -97,13 +106,15 @@ Edge109SyncFix.exe --menu --lang=en
 | 项目 | 验证结果 |
 | --- | --- |
 | Windows 7 SP1 x64、Edge 109.0.1518.140 x64 | ✅ 已验证 |
+| Windows 7 SP1 x86、Edge 109.0.1518.140 x86，v0.3-test2 Hook | ✅ 已验证 Hook 实际修改请求及同步连接 |
+| Windows 7 x86、v0.3-test3 新菜单、语言、备份与原有配置模式 | 🧪 待实机回归 |
 | 无需 Fiddler / x64dbg 的独立 Hook | ✅ 已验证 |
 | Microsoft 云同步连接及收藏夹双向同步 | ✅ 已验证 |
 | 保留登录状态，重启 Win7 后再次同步 | ✅ 已成功测试 |
 | v0.2-test1、v0.2-test2 双模式同步 | ✅ 测试者反馈两种模式均可同步 |
 | v0.2-test3 三语言自动切换、各语言系统完整回归 | 🧪 仍待进一步验证 |
 | 长期运行、多次连续重启及更多用户环境 | 🧪 尚未充分验证 |
-| Windows 8.1、32 位 Windows、其他 Edge 构建 | ❔ 尚未验证 |
+| Windows 8.1、其他 Edge 构建 | ❔ 尚未验证 |
 | 密码、支付信息等敏感数据类型 | ⚠️ 不建议测试 |
 
 测试成功时，`edge://sync-internals/` 曾显示：
@@ -151,6 +162,8 @@ skipped=0
 - [测试方法](docs/TESTING.md)
 - [多语言说明](docs/MULTILINGUAL.md)
 - [v0.2-test3 更新记录](docs/CHANGELOG-v0.2-test3.md)
+- [v0.3-test3 x86 变更](docs/CHANGELOG-v0.3-test3.md)
+- [Win7 x86 回归测试清单](docs/TESTING-x86-v0.3-test3.md)
 - [源代码](src/)
 - [GitHub Releases](https://github.com/yuyu107/LegacyEdgeSync/releases)
 - [问题反馈](https://github.com/yuyu107/LegacyEdgeSync/issues)
@@ -165,9 +178,9 @@ Microsoft Edge 是 Microsoft 的商标。LegacyEdgeSync 是非官方、独立的
 
 ### English summary
 
-**LegacyEdgeSync** is an experimental, build-specific runtime compatibility patch for Microsoft Edge cloud sync on Windows 7 SP1 x64. Sync and bidirectional bookmark updates have been observed working on **Edge 109.0.1518.140 x64**.
+**LegacyEdgeSync** is an experimental, build-specific runtime compatibility patch for Microsoft Edge cloud sync on Windows 7 SP1 x86 and x64. Sync and bidirectional bookmark updates have been observed working on **Edge 109.0.1518.140 x64**; the x86 three-path Hook has shown successful header patches and an active server connection.
 
-The latest **published pre-release is v0.1-test3**. The repository's `main` branch now contains **v0.2-test3 multilingual source code**, including isolated and existing-profile modes; this newer build has **not** yet been published as a GitHub Release.
+The latest **published pre-release is v0.1-test3**. The repository's `main` branch contains **v0.2-test3 x64 multilingual source code**. New **v0.3-test3 x86** frontend features (including existing-profile mode and multilingual UI) remain unverified and the x86 source has not yet been pushed to `src/x86/`. Neither test build is a GitHub Release.
 
 The project does not provide browser security updates and is not intended for production use. Avoid syncing passwords or other sensitive data.
 
