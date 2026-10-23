@@ -1,0 +1,90 @@
+#include "winmini.h"
+
+/* LegacyEdgeSync v0.2-test3: Windows user display-language auto-detection (zh-CN/zh-TW/en). */
+/* Keep the verified test3 remote DLL injection implementation unchanged. */
+/* User UI language (not ANSI code page / geographic locale). Windows 7 compatible. */
+enum { LANG_ZH_CN=0, LANG_ZH_TW=1, LANG_EN=2 };
+static int g_language=LANG_EN;
+static const wchar_t* TR(const wchar_t*cn,const wchar_t*tw,const wchar_t*en){
+    return g_language==LANG_ZH_CN?cn:(g_language==LANG_ZH_TW?tw:en);
+}
+static void detect_language(void){
+    WORD ui=GetUserDefaultUILanguage();
+    if(!ui)ui=GetSystemDefaultUILanguage();
+    if((ui&0x3FF)!=0x04){g_language=LANG_EN;return;}
+    // zh-TW=0404, zh-HK=0c04, zh-MO=1404 (traditional); zh-CN=0804, zh-SG=1004 (simplified).
+    WORD sub=(WORD)(ui>>10);
+    g_language=(sub==1 || sub==3 || sub==5 || sub==0x1F)?LANG_ZH_TW:LANG_ZH_CN;
+}
+static int wstarts(const wchar_t*p,const wchar_t*part){
+    while(*part){if(!*p || *p++!=*part++)return 0;}return 1;
+}
+static void apply_language_override(const wchar_t*cmd){
+    // ASCII-only switches; case-sensitive by design. Actual detection is the default.
+    for(const wchar_t*p=cmd;p && *p;p++){
+      if(p>cmd && p[-1]!=L' ' && p[-1]!=L'\t')continue;
+      if(wstarts(p,L"--lang=zh-CN") && (p[12]==0 || p[12]==L' ')){g_language=LANG_ZH_CN;return;}
+      if(wstarts(p,L"--lang=zh-TW") && (p[12]==0 || p[12]==L' ')){g_language=LANG_ZH_TW;return;}
+      if(wstarts(p,L"--lang=en") && (p[9]==0 || p[9]==L' ')){g_language=LANG_EN;return;}
+    }
+}
+static const wchar_t* language_flag(void){return g_language==LANG_ZH_CN?L"--lang=zh-CN":(g_language==LANG_ZH_TW?L"--lang=zh-TW":L"--lang=en");}
+static void print_language(void){
+    outw(TR(L"界面语言：简体中文\r\n",L"介面語言：繁體中文\r\n",L"Interface language: English\r\n"));
+}
+static wchar_t edgeExe[1024];
+static wchar_t dllPath[1024];
+static wchar_t profile[1024];
+static wchar_t statusPath[1024];
+static wchar_t cmdline[4096];
+static wchar_t localOwnerPath[1024];
+static int normalMode=0;
+
+static int append_path(wchar_t*dst,SIZE_T cap,const wchar_t*s){return wappend(dst,cap,s);}
+static int has_flag(const wchar_t*cmd,const wchar_t*flag){
+    SIZE_T n=wlen(flag);
+    for(SIZE_T i=0;cmd && cmd[i];i++){
+        if(i>0 && cmd[i-1]!=L' ' && cmd[i-1]!=L'\t')continue;
+        if(cmd[i]!=L'-')continue;
+        SIZE_T j=0;
+        while(j<n && cmd[i+j]==flag[j])j++;
+        if(j==n && (cmd[i+n]==0 || cmd[i+n]==L' ' || cmd[i+n]==L'\t'))return 1;
+    }
+    return 0;
+}
+static int init_paths(void){
+    zero_mem(edgeExe,sizeof(edgeExe));zero_mem(dllPath,sizeof(dllPath));
+    zero_mem(profile,sizeof(profile));zero_mem(statusPath,sizeof(statusPath));zero_mem(cmdline,sizeof(cmdline));
+    if(!GetModuleFileNameW(0,dllPath,1024))return 0;
+    SIZE_T i=wlen(dllPath);
+    while(i>0 && dllPath[i-1]!=L'\\' && dllPath[i-1]!=L'/')i--;
+    dllPath[i]=0;
+    if(!append_path(dllPath,1024,L"Edge109SyncHook.dll"))return 0;
+    if(GetFileAttributesW(dllPath)==INVALID_FILE_ATTRIBUTES)return 0;
+    DWORD n=GetEnvironmentVariableW(L"ProgramFiles(x86)",edgeExe,1024);
+    if(n==0||n>=1024){zero_mem(edgeExe,sizeof(edgeExe));n=GetEnvironmentVariableW(L"ProgramFiles",edgeExe,1024);}
+    if(n==0||n>=1024)return 0;
+    if(!append_path(edgeExe,1024,L"\\Microsoft\\Edge\\Application\\msedge.exe"))return 0;
+    if(GetFileAttributesW(edgeExe)==INVALID_FILE_ATTRIBUTES)return 0;
+    n=GetEnvironmentVariableW(L"TEMP",statusPath,1024);
+    if(n==0||n>=1024)return 0;
+    if(!append_path(statusPath,1024,L"\\Edge109SyncFix-status.txt"))return 0;
+    if(!append_path(cmdline,4096,L"\"") || !append_path(cmdline,4096,edgeExe) || !append_path(cmdline,4096,L"\""))return 0;
+    if(!normalMode){
+        n=GetEnvironmentVariableW(L"TEMP",profile,1024);
+        if(n==0||n>=1024)return 0;
+        if(!append_path(profile,1024,L"\\Edge109SyncFix-Test"))return 0;
+        if(!append_path(cmdline,4096,L" --user-data-dir=\"") ||
+          !append_path(cmdline,4096,profile) || !append_path(cmdline,4096,L"\""))return 0;
+    }
+    if(!append_path(cmdline,4096,L" --no-first-run --disable-background-mode --sync-url=\"https://edge.microsoft.com/sync/v1/feeds/me/syncEntities\""))return 0;
+    return 1;
+}
+
+/* Reject launching when any Edge process is already running.
+   This is intentionally conservative: no forced termination, no existing-process injection. */
+static int edge_processes_running(void){
+    HANDLE s=CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS,0);
+    if(!s || s==(HANDLE)(-1))return -1;
+    PROCESSENTRY32W entry;
+    zero_mem(&entry,sizeof(entry));entry.dwSize=sizeof(entry);
