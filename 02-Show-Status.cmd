@@ -1,7 +1,7 @@
 @echo off
-if not exist "%TEMP%\Edge109SyncFix-status.txt" (
-  echo No status file. Launcher may not have injected successfully.
-) else (
-  type "%TEMP%\Edge109SyncFix-status.txt"
-)
+setlocal
+cd /d "%~dp0"
+"%~dp0Edge109SyncFix.exe" --status
+set "R=%ERRORLEVEL%"
 pause
+exit /b %R%
