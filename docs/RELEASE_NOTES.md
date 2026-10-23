@@ -1,4 +1,6 @@
-# v0.1-test3 — 实验版研究发布记录
+# v0.1-test3 — 历史实验版发布记录
+
+> 本页**仅记录历史版本 v0.1-test3**，不是最新 Release。当前已发布实验版为 [v0.3-test7](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.3-test7)，版本对比见 [RELEASES.md](RELEASES.md)。
 
 ## 已实现
 
@@ -21,4 +23,4 @@
 - Hook 修改运行中进程机器码，存在潜在并发与崩溃问题；未经过安全审计。
 - 不支持当作新版 Edge 使用；不推荐日常账户和密码同步。
 
-**发行方式建议**：GitHub Release 标记 `v0.1-test3`，勾选 **Set as a pre-release**；发行资产上传 `LegacyEdgeSync-v0.1-test3-Win7-x64.zip`。不要将其描述为稳定版或正式版。
+**历史发布状态**：此版本已于 2026-10-22 作为 Pre-release 发布，实际附件为 [`Edge109-SyncFix-v0.1-test3-Win7-x64.zip`](https://github.com/yuyu107/LegacyEdgeSync/releases/download/v0.1-test3/Edge109-SyncFix-v0.1-test3-Win7-x64.zip)。

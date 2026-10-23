@@ -1,0 +1,4 @@
+# Historical unversioned x64 checksum file (preserved verbatim below).
+# Refer to versioned release checksum documents for current downloads.
+8dfd359236059fc430ee49d9a9d4f24328303bdfe654b74e92599e7d31af670d *Edge109SyncFix.exe
+793aba700707c5051b41466a2f6a340bfa945245248ceb2413db493e54068aa9 *Edge109SyncHook.dll

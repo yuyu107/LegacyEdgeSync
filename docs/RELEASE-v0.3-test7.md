@@ -1,6 +1,6 @@
 # LegacyEdgeSync v0.3-test7 — Win7 / Win8.1 x86/x64 云同步整合测试版
 
-> **实验性 Pre-release，非稳定版。** 只研究 Microsoft Edge **109.0.1518.140** 特定 x86/x64 构建的同步兼容性。整合包 v0.3-test7 尚未完成跨系统实机回归；成功案例来自前几个单架构测试版本。
+> **已发布 Pre-release，仍非稳定版。** 只研究 Microsoft Edge **109.0.1518.140** 特定 x86/x64 构建的同步兼容性。整合包 v0.3-test7 尚未完成跨系统实机回归；成功案例来自前几个单架构测试版本。
 
 ## 更新内容
 
@@ -79,4 +79,4 @@ SHA-256 用于比对文件字节是否一致，并非安全认证。
 
 ---
 
-**发布设置：** Tag = `v0.3-test7`；勾选 **Set as a pre-release**；附件上传上述 ZIP。该 Markdown 是**待发布草稿**，同步到仓库不等于已经创建 Release。
+**当前状态：已发布 Pre-release。** [查看 v0.3-test7 Release](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.3-test7)，正式附件名称如上。该版本仍属实验性构建，跨系统整合包的回归清单尚未全部通过。

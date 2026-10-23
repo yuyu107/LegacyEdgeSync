@@ -1,22 +1,29 @@
-# Repository upload status — 2026-10-23
+# Repository upload status — 2026-10-24
 
-The **v0.3-test7 source and documentation are now on main**, alongside the consolidated root launch CMD scripts.
+## Current release
 
-## Latest source layout
+- **v0.3-test7 is published** as a [GitHub pre-release](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.3-test7).
+- Verified release asset entry: `LegacyEdgeSync-v0.3-test7-Win7-Win81-Universal-TEST.zip` (114435 bytes).
+- Published release does **not** imply full Win7/8.1 runtime regression. Successful per-architecture tests were from earlier experimental builds.
+- Previous pre-release: [v0.1-test3](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.1-test3).
 
-- `src/unified/`: x86 universal architecture selector, PE checks, bundle diagnostics.
-- `src/x86/`: x86 test2 Hook and test3 launcher sources.
-- `src/x64/`: dual-offset Win7/8.1 Hook source and historical Win7-only Hook source.
-- `src/`: original v0.2-test3 x64 source retained as reference.
-- Root `00`–`10` CMD scripts call **`LegacyEdgeSync.exe`** (the universal selector), not the old directly invoked x64 launcher.
-- `docs/CHANGELOG-v0.3-test7.md`, `docs/TESTING-v0.3-test7.md`, `docs/RELEASE-v0.3-test7.md`, `docs/SHA256SUMS-v0.3-test7.txt`.
+## Source layout
 
-## Release status
+- `src/unified/` — architecture selector, bundle diagnostics, build instructions.
+- `src/x86/` — x86 child launcher and three-path Hook sources.
+- `src/x64/` — Win7/Win8.1 dual-offset Hook and prior Win7-only Hook source.
+- Root `src/` files — historical v0.2-test3 x64 implementation.
+- Root numbered CMD scripts — universal runtime shortcuts; **source-only GitHub checkout does not contain their required EXE/DLL binaries**.
+- `legacy/v0.1-test3/` — archived legacy CMD helpers, no longer competing with new root numbers.
 
-As last checked, the newest **published** pre-release was `v0.1-test3`; the `v0.3-test7` Release page has **not** been created. The new release note is a draft. The v0.3-test7 universal ZIP requires regression on existing VMs before it should be described as tested.
+## Documentation
 
-**Source-only checkout note:** The GitHub main branch does not ship compiled `LegacyEdgeSync.exe` and child binaries. Root CMD scripts require a complete build/runtime package; they will not work from a source-only clone until the binaries are supplied.
+- [README](README.md) — current download and instructions.
+- [Release index](docs/RELEASES.md) — published versions and archived test milestones.
+- [Current release notes](docs/RELEASE-v0.3-test7.md).
+- [Current SHA-256](docs/SHA256SUMS-v0.3-test7.txt).
+- [Regression checklist](docs/TESTING-v0.3-test7.md).
 
-Windows 7 x86/x64 and Windows 8.1 x64 successes were achieved in earlier test builds. No Win8.1 x86 result is claimed. Launchers are injection-based and have triggered HEUR/QVM20.1 alerts; these have not been independently confirmed as false positives.
+**Integrity note:** local candidate ZIP checksum 44a672420b8e36b5c9f4bd8a1c3dad35e0175645e2902a4dc193376e740b7238. The GitHub release asset was verified by name and size; match downloaded asset bytes with this SHA-256 when possible. SHA-256 does not establish that an injection-based program is safe.
 
-See [README](README.md).
+**Security note:** 360 HEUR/QVM detection has not been vendor-cleared and must not be described as a confirmed false positive.

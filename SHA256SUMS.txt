@@ -1,2 +1,3 @@
-8dfd359236059fc430ee49d9a9d4f24328303bdfe654b74e92599e7d31af670d *Edge109SyncFix.exe
-793aba700707c5051b41466a2f6a340bfa945245248ceb2413db493e54068aa9 *Edge109SyncHook.dll
+# v0.3-test7 universal pre-release ZIP. Download it from GitHub Releases before using sha256sum -c.
+44a672420b8e36b5c9f4bd8a1c3dad35e0175645e2902a4dc193376e740b7238  LegacyEdgeSync-v0.3-test7-Win7-Win81-Universal-TEST.zip
+# Detailed internal-file SHA-256: docs/SHA256SUMS-v0.3-test7.txt
