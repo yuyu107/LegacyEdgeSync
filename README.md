@@ -57,7 +57,7 @@ LegacyEdgeSync 通过**指定同步地址 + 进程内运行时兼容补丁**，�
 
 **语言判断：** 使用 `GetUserDefaultUILanguage()` 获取 Windows 用户界面显示语言，简体中文（大陆／新加坡）采用简体提示，繁体中文（台湾／香港／澳门）采用繁體提示，其他系统语言默认英文。可以使用 `--lang` 参数手动检查三套文本；语言切换不会改变 Edge 或 Windows 的语言设置。
 
-详细内容：[v0.3-test7 更新记录](docs/CHANGELOG-v0.3-test7.md) · [v0.3-test7 回归清单](docs/TESTING-v0.3-test7.md) · [多语言使用与测试](docs/MULTILINGUAL.md) · [旧版 x86 变更记录](docs/CHANGELOG-v0.3-test3.md)。
+详细内容：[v0.3-test7 Release 草稿](docs/RELEASE-v0.3-test7.md) · [v0.3-test7 SHA-256](docs/SHA256SUMS-v0.3-test7.txt) · [v0.3-test7 更新记录](docs/CHANGELOG-v0.3-test7.md) · [v0.3-test7 回归清单](docs/TESTING-v0.3-test7.md) · [多语言使用与测试](docs/MULTILINGUAL.md) · [旧版 x86 变更记录](docs/CHANGELOG-v0.3-test3.md)。
 
 ## 如何使用
 
@@ -116,7 +116,7 @@ x86 实验所需详细测试内容见：[v0.3-test3 更新记录](docs/CHANGELOG
 | `05-Launch-Normal.cmd` | 运行原有配置模式，按提示确认后继续 |
 | `06-Backup-Original-Profile.cmd` | 备份原有 Edge 配置 |
 
-以上脚本属于**独立运行包**，GitHub 源码目录仅提供源码和构建脚本。该整合版尚未通过 Win7/8.1 全部实机回归，也尚未发布 GitHub Release。
+根目录 CMD 脚本现已同步到 GitHub，但**源码仓库不含编译好的统一入口 EXE、子启动器和 Hook DLL**。这些脚本需要与完整运行包的二进制文件一起放置，不能直接从纯源码克隆运行。该整合版尚未通过 Win7/8.1 全部实机回归，也尚未发布 GitHub Release。
 
 ## 兼容性与验证情况
 
@@ -187,6 +187,8 @@ skipped=0
 - [v0.2-test3 更新记录](docs/CHANGELOG-v0.2-test3.md)
 - [v0.3-test3 x86 变更](docs/CHANGELOG-v0.3-test3.md)
 - [v0.3-test7 跨系统整合版变更](docs/CHANGELOG-v0.3-test7.md)
+- [v0.3-test7 Release 草稿](docs/RELEASE-v0.3-test7.md)
+- [v0.3-test7 哈希校验](docs/SHA256SUMS-v0.3-test7.txt)
 - [v0.3-test7 兼容性回归清单](docs/TESTING-v0.3-test7.md)
 - [统一自动架构选择器源码](src/unified/)
 - [x86 Hook 和启动器源码](src/x86/)

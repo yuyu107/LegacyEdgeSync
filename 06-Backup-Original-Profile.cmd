@@ -1,7 +1,5 @@
 @echo off
-setlocal
 cd /d "%~dp0"
-"%~dp0Edge109SyncFix.exe" --backup
-set "R=%ERRORLEVEL%"
+"%~dp0LegacyEdgeSync.exe" --backup
+echo.
 pause
-exit /b %R%

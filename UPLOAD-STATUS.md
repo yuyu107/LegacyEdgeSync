@@ -1,21 +1,22 @@
 # Repository upload status — 2026-10-23
 
-The source repository now contains the **v0.2-test3 multilingual launcher code** and the original runtime hook implementation. GitHub Desktop has successfully synchronized the main source files.
+The **v0.3-test7 source and documentation are now on main**, alongside the consolidated root launch CMD scripts.
 
-## Verified repository files (main branch)
+## Latest source layout
 
-- `src/launcher.c` — v0.2-test3 multilingual launcher, Git blob SHA `ab8ccef668a5117d70a3922ce377ad82122cd63b`
-- `src/winmini.h` — updated Windows 7 API declarations, SHA `ee127b517fc60bcaeecd4cc78c4a36b2f4a0ac90`
-- `src/hook.c` — retained tested hook source, SHA `fbb6b127abba0c2402b6213ea3fd1152b9346dbe`
-- `src/kernel32.def`, startup CMD wrappers and project documentation are present.
-- `docs/WHY-SYNC-FIX.md` and `docs/WHY-NOT-EXTENDED-KERNEL.md` are published.
+- `src/unified/`: x86 universal architecture selector, PE checks, bundle diagnostics.
+- `src/x86/`: x86 test2 Hook and test3 launcher sources.
+- `src/x64/`: dual-offset Win7/8.1 Hook source and historical Win7-only Hook source.
+- `src/`: original v0.2-test3 x64 source retained as reference.
+- Root `00`–`10` CMD scripts call **`LegacyEdgeSync.exe`** (the universal selector), not the old directly invoked x64 launcher.
+- `docs/CHANGELOG-v0.3-test7.md`, `docs/TESTING-v0.3-test7.md`, `docs/RELEASE-v0.3-test7.md`, `docs/SHA256SUMS-v0.3-test7.txt`.
 
-## Important release distinction
+## Release status
 
-The currently published GitHub Release is **v0.1-test3 (pre-release)**. Its asset is `Edge109-SyncFix-v0.1-test3-Win7-x64.zip`.
+As last checked, the newest **published** pre-release was `v0.1-test3`; the `v0.3-test7` Release page has **not** been created. The new release note is a draft. The v0.3-test7 universal ZIP requires regression on existing VMs before it should be described as tested.
 
-The **v0.2-test3 source is uploaded**, but the corresponding compiled multilingual binary has **not** been published as a GitHub Release. Do not assume the v0.1-test3 binary has the current multilingual menu or existing-profile mode.
+**Source-only checkout note:** The GitHub main branch does not ship compiled `LegacyEdgeSync.exe` and child binaries. Root CMD scripts require a complete build/runtime package; they will not work from a source-only clone until the binaries are supplied.
 
-See [README](README.md) for current usage, compatibility and limitations.
+Windows 7 x86/x64 and Windows 8.1 x64 successes were achieved in earlier test builds. No Win8.1 x86 result is claimed. Launchers are injection-based and have triggered HEUR/QVM20.1 alerts; these have not been independently confirmed as false positives.
 
-This is an experimental prototype, not a security update or a supported modern-browser replacement.
+See [README](README.md).

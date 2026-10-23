@@ -1,7 +1,5 @@
 @echo off
-setlocal
 cd /d "%~dp0"
-"%~dp0Edge109SyncFix.exe" --normal
-set "R=%ERRORLEVEL%"
+"%~dp0LegacyEdgeSync.exe" --normal
+echo.
 pause
-exit /b %R%
