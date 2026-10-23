@@ -1,6 +1,7 @@
 @echo off
+setlocal
 cd /d "%~dp0"
-Edge109SyncFix.exe
-echo.
-echo Check status via 02-Show-Status.cmd before signing in.
+"%~dp0Edge109SyncFix.exe" --test
+set "R=%ERRORLEVEL%"
 pause
+exit /b %R%
