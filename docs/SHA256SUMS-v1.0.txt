@@ -1,0 +1,13 @@
+# LegacyEdgeSync v1.0 checksums
+
+ZIP:
+a4994f4315088057f32b79ae88b31eb7972713b43e0564db695eddda9dde303e  LegacyEdgeSync-v1.0-Win7-Win81-Universal.zip
+
+EXE / DLL inside ZIP (unchanged from v0.3-test8):
+2f8354e33c1c0ee96129248bb8b27ec7f36ab723ed691426d45127bd21a6ab35  LegacyEdgeSync.exe
+278240138f51659e0bcbd50c71ef1e3da976e3ea6be3e3b4e9110a7ba274cf4d  Win7-x86/LegacyEdgeSync32.exe
+bbfcd3b60af3788ce100c7d020c927c4aedcad95a7fbb13ff14785e685edb71c  Win7-x86/LegacyEdgeSyncHook32.dll
+547f016a70ddae153861a21f9d6a1732287546ae34ce4b948466f89c5ef8f832  Win7-x64/Edge109SyncFix.exe
+7845fc80d5c6d3ff5d1d9d73abee8835172553642ce283a5fc8ed1b52cac32dc  Win7-x64/Edge109SyncHook.dll
+
+Hashes check identity, not safety. ZIP asset has not yet been uploaded to the GitHub Release.

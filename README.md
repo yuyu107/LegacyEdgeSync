@@ -11,6 +11,10 @@
 > [!WARNING]
 > **本项目是实验性兼容性研究，未完成安全审计，也不能替代受安全支持的浏览器。** 目标仅为 **Microsoft Edge 109.0.1518.140** 的特定 x86/x64 构建。Edge 109 已停止安全更新；请在隔离虚拟机中使用测试账户，勿同步真实密码或支付信息。360 曾对启动器报告启发式风险，尚无厂商复核结论。
 
+
+> [!IMPORTANT]
+> **视频演示版本已命名为 v1.0（基于 v0.3-test8 自适应测试构建）。** v1.0 安装包已整理，**尚未上传到 GitHub Release**；当前公开可下载的版本仍是下方的 v0.3-test7。v1.0 的 [发布说明草稿](docs/RELEASE-v1.0.md)、[变更记录](docs/CHANGELOG-v1.0.md) 和 [验证清单](docs/TESTING-v1.0.md) 已准备好；请勿误将旧测试记录视为 v1.0 整包实测成功。
+
 ## 下载当前版本
 
 <https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.3-test7>

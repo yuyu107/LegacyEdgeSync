@@ -1,6 +1,15 @@
 # Repository upload status — 2026-10-24
 
-## Current release
+## v1.0 video release in preparation
+
+- Chosen public version: **v1.0**, based on the v0.3-test8 adaptive test ZIP.
+- New v1.0 package and release Markdown prepared and verified locally, but **not yet uploaded to GitHub Releases**.
+- Five principal EXE/DLL binaries are **byte-identical to v0.3-test8**. Internal historical component build labels intentionally remain visible.
+- New adaptive x64 source exists in the v1.0 source kit, but **the repository's current src/x64/hook.c still reflects v0.3-test7**. Do not claim the GitHub main branch already contains the v1.0 adaptive implementation.
+- Candidate ZIP SHA-256: `a4994f4315088057f32b79ae88b31eb7972713b43e0564db695eddda9dde303e`.
+- v1.0 files: `docs/RELEASE-v1.0.md`, `docs/CHANGELOG-v1.0.md`, `docs/TESTING-v1.0.md`.
+
+## Current published release
 
 - **v0.3-test7 is published** as a [GitHub pre-release](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.3-test7).
 - Verified release asset entry: `LegacyEdgeSync-v0.3-test7-Win7-Win81-Universal-TEST.zip` (114435 bytes).
