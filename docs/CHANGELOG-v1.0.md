@@ -13,7 +13,7 @@
 ## 版本标识与发布状态
 
 - v1.0 是整个 ZIP 的公开版本号；内部程序/诊断可能仍显示 `v0.2-test3`、`v0.3-test3`、`v0.3-test7`、`v0.3-test8`，它们是历史组件构建 ID。
-- 目前仓库公开的最后一个 Release 为 v0.3-test7。**v1.0 的新 ZIP 尚未上传 GitHub Release**。
+- **v1.0 已于 2026-10-26 在 GitHub 正式发布**，并附带 `LegacyEdgeSync-v1.0-Win7-Win81-Universal.zip`（125174 字节）：[Release 页面](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v1.0)。
 - `src/x64/hook.c` 的 v1.0 自适应新源码仍需从源码套件同步到 GitHub；此文档的提交不代表源码已全部同步。
 
-详细参见 [v1.0 Release 草稿](RELEASE-v1.0.md) 和 [验证清单](TESTING-v1.0.md)。
+详细参见 [v1.0 Release 正文](RELEASE-v1.0.md) 和 [验证清单](TESTING-v1.0.md)。

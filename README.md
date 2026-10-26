@@ -3,7 +3,7 @@
 **Windows 7 / Windows 8.1 上 Microsoft Edge 109 云同步兼容性研究工具**  
 *Experimental Microsoft Edge 109 sync compatibility fix for legacy Windows.*
 
-[![Pre-release](https://img.shields.io/github/v/release/yuyu107/LegacyEdgeSync?include_prereleases&label=pre-release)](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.3-test7)
+[![Release](https://img.shields.io/github/v/release/yuyu107/LegacyEdgeSync?label=release)](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v1.0)
 [![Windows](https://img.shields.io/badge/Windows-7%20%2F%208.1-blue)](#兼容性与验证情况)
 [![Architectures](https://img.shields.io/badge/Edge-x86%20%2F%20x64-blue)](#兼容性与验证情况)
 [![Experimental](https://img.shields.io/badge/status-experimental-orange)](#注意事项和已知问题)
@@ -13,28 +13,26 @@
 
 
 > [!IMPORTANT]
-> **视频演示版本已命名为 v1.0（基于 v0.3-test8 自适应测试构建）。** v1.0 安装包已整理，**尚未上传到 GitHub Release**；当前公开可下载的版本仍是下方的 v0.3-test7。v1.0 的 [发布说明草稿](docs/RELEASE-v1.0.md)、[变更记录](docs/CHANGELOG-v1.0.md) 和 [验证清单](docs/TESTING-v1.0.md) 已准备好；请勿误将旧测试记录视为 v1.0 整包实测成功。
+> **v1.0 视频演示版已于 2026-10-26 正式发布。** 基于 v0.3-test8 自适应识别测试构建整理，Release 已公开并附带完整 ZIP；**正式发布不代表已完成所有 Windows 环境的稳定性和安全验证**。请阅读 [v1.0 Release 说明](docs/RELEASE-v1.0.md) 与 [回归清单](docs/TESTING-v1.0.md)。
 
 ## 下载当前版本
 
-<https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.3-test7>
-
-**最新已发布版本：`v0.3-test7`（Pre-release）**，支持在统一界面下选择 Edge x86 / x64 修复器，并将已在 Win8.1 x64 实验成功的双偏移 Hook 整合到 x64 DLL。
+**当前最新版本：[LegacyEdgeSync v1.0](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v1.0)**（Windows 7 / 8.1 · Edge 109 x86/x64）。
 
 | 下载 | 说明 |
 | --- | --- |
-| **[v0.3-test7 完整测试包](https://github.com/yuyu107/LegacyEdgeSync/releases/download/v0.3-test7/LegacyEdgeSync-v0.3-test7-Win7-Win81-Universal-TEST.zip)** | 含统一入口、x86/x64 启动器、Hook DLL、诊断脚本和历史回退文件 |
-| [全部 Releases](https://github.com/yuyu107/LegacyEdgeSync/releases) | 查看包括 `v0.1-test3` 在内的历史预发布版本 |
-| [v0.3-test7 更新记录](docs/CHANGELOG-v0.3-test7.md) | 本版功能和复用的 Hook 来源 |
-| [v0.3-test7 回归清单](docs/TESTING-v0.3-test7.md) | 明确哪些测试已完成、哪些仍待验证 |
+| **[v1.0 完整运行包](https://github.com/yuyu107/LegacyEdgeSync/releases/download/v1.0/LegacyEdgeSync-v1.0-Win7-Win81-Universal.zip)** | 统一架构选择器、x86/x64 启动器、Hook DLL、诊断/备份脚本和回退组件；请完整解压 |
+| [全部 Releases](https://github.com/yuyu107/LegacyEdgeSync/releases) | 查看包括 v0.3-test7 在内的历史测试版 |
+| [v1.0 更新记录](docs/CHANGELOG-v1.0.md) | 说明 v0.3-test8 自适应识别与保留的旧 Hook |
+| [v1.0 回归清单](docs/TESTING-v1.0.md) | 区分历史实测、离线测试与尚未完成的本版回归 |
 
-**SHA-256（v0.3-test7 ZIP 候选文件）：**
+**发布前本地打包 ZIP 的 SHA-256（可用于核对下载文件）：**
 
 ```text
-44a672420b8e36b5c9f4bd8a1c3dad35e0175645e2902a4dc193376e740b7238  LegacyEdgeSync-v0.3-test7-Win7-Win81-Universal-TEST.zip
+a4994f4315088057f32b79ae88b31eb7972713b43e0564db695eddda9dde303e  LegacyEdgeSync-v1.0-Win7-Win81-Universal.zip
 ```
 
-[其他程序文件的哈希](docs/SHA256SUMS-v0.3-test7.txt)。哈希只能用于核对文件是否一致，不代表安全认证。
+[主要二进制文件哈希](docs/SHA256SUMS-v1.0.txt)。已核实 GitHub Release 附件名称和大小（125174 字节），**尚未通过下载后的字节校验独立确认附件哈希**；哈希本身不代表安全认证。
 
 ## 项目解决什么问题？
 
@@ -44,7 +42,7 @@ LegacyEdgeSync 在启动浏览器时使用 `--sync-url` 指定测试可用的服
 
 详细背景：[同步故障与修复原理](docs/WHY-SYNC-FIX.md) · [研究记录](docs/RESEARCH.md) · [为什么暂不采用扩展内核路线](docs/WHY-NOT-EXTENDED-KERNEL.md)。
 
-## 使用方法（v0.3-test7）
+## 使用方法（v1.0）
 
 1. 使用 **Windows 7 SP1 / Windows 8.1** 的测试环境，安装 **Edge 109.0.1518.140** 对应 x86 或 x64 版本；建立虚拟机快照。
 2. 从 Release 下载并**完整解压 ZIP**，不要只复制根目录的 `LegacyEdgeSync.exe`。旧文件夹名 `Win7-x86/`、`Win7-x64/` 是按 **Edge 架构**区分，而非限制在 Win7 运行。
@@ -78,17 +76,17 @@ LegacyEdgeSync.exe --diagnose --lang=en
 
 ## 兼容性与验证情况
 
-以下明确区分**早期版本的实测成果**和**本版整合包的回归状态**。
+以下明确区分**早期版本的实测成果**和**v1.0 整合包的回归状态**。v1.0 源自 v0.3-test8，新增 x64 有界自适应识别，但尚未完成新 DLL 的 Windows 实机回归。
 
-| 操作系统 / Edge 架构 | 已记录的实验结果 | v0.3-test7 整包状态 |
+| 操作系统 / Edge 架构 | 已记录的实验结果 | v1.0 整包状态 |
 | --- | --- | --- |
 | Win7 SP1 x86 + Edge x86 | 三路径 Hook 修改成功，云同步连接恢复；正常配置模式曾反馈成功 | **待回归** |
-| Win7 SP1 x64 + Edge x64 | 原 `0x49` 路径云同步成功，含部分跨设备收藏夹测试 | **双偏移 Hook 待回归** |
-| Win8.1 x64 + Edge x64 | v0.3-test6 的 `0x45` 路径 `hits=14`、`patched=14`、`SYNCER_OK` | **统一入口待回归** |
+| Win7 SP1 x64 + Edge x64 | 原 `0x49` 路径云同步成功，含部分跨设备收藏夹测试 | **自适应 x64 Hook 待回归** |
+| Win8.1 x64 + Edge x64 | v0.3-test6 的 `0x45` 路径 `hits=14`、`patched=14`、`SYNCER_OK` | **自适应 x64 Hook 待回归** |
 | Win7 x64 + Edge x86 | 不应按系统位数误选 Hook；尚无完整同步验证 | 待测试 |
 | Win8.1 x86 + Edge x86 | 尚未测试 | 暂缓 |
 
-`v0.3-test7` **已发布不等于已完成稳定性回归**。目前尚不能保证首次请求竞争条件、重启后的长期稳定性、所有语言、所有数据类型和其他 Edge 构建。建议先在已有 Win7/Win8.1 虚拟机中回归，不必仅为此专门安装 Win8.1 x86。
+`v1.0` **已发布不等于已完成稳定性回归**。目前尚不能保证首次请求竞争条件、重启后的长期稳定性、所有语言、所有数据类型和其他 Edge 构建。建议先在已有 Win7/Win8.1 虚拟机中回归，不必仅为此专门安装 Win8.1 x86。
 
 判断成功不能只看 `INSTALLED`：还要有 `patched > 0`、正常服务端响应和实际跨设备数据一致性。
 
@@ -109,10 +107,10 @@ LegacyEdgeSync.exe --diagnose --lang=en
 | --- | --- |
 | [`src/unified/`](src/unified/) | 自动架构识别与诊断入口源码 |
 | [`src/x86/`](src/x86/) | x86 启动器与三路径 Hook 源码 |
-| [`src/x64/`](src/x64/) | Win7/Win8.1 双偏移 Hook、原 Win7 Hook 备份源码 |
+| [`src/x64/`](src/x64/) | 当前 main 仍主要保存 v0.3-test7 双偏移 Hook 源码；v1.0 自适应 Hook 新源码待同步（已包含在另行整理的源码包） |
 | [`src/`](src/) | 历史版 x64 v0.2-test3 源码 |
-| [`docs/RELEASE-v0.3-test7.md`](docs/RELEASE-v0.3-test7.md) | 当前 Release 正文归档 |
-| [`docs/TESTING-v0.3-test7.md`](docs/TESTING-v0.3-test7.md) | 未完成的回归测试清单 |
+| [`docs/RELEASE-v1.0.md`](docs/RELEASE-v1.0.md) | 当前 Release 正文归档 |
+| [`docs/TESTING-v1.0.md`](docs/TESTING-v1.0.md) | 未完成的回归测试清单 |
 | [`docs/RESEARCH.md`](docs/RESEARCH.md) | 同步请求研究记录 |
 | [`docs/RELEASES.md`](docs/RELEASES.md) | 版本与历史文档索引 |
 
@@ -128,8 +126,8 @@ Microsoft Edge 是 Microsoft 的商标。本项目是非官方、独立的兼容
 
 ### English summary
 
-**LegacyEdgeSync v0.3-test7** is a published **experimental pre-release** for Microsoft Edge **109.0.1518.140** on Windows 7 / 8.1, selecting x86/x64 runtime hooks by the browser's actual PE architecture.
+**LegacyEdgeSync v1.0** is now a published **experimental release** for Microsoft Edge **109.0.1518.140** on Windows 7 / 8.1. It selects x86/x64 hooks by the browser's actual PE architecture and includes an adaptive x64 request-header locator.
 
-Earlier builds demonstrated sync recovery on Win7 x86, Win7 x64, and Win8.1 x64. **The v0.3-test7 consolidated bundle has not completed runtime regression**; Win8.1 x86 remains untested. The tool does not provide browser security fixes, has not passed a security audit, and some launchers have been flagged by antivirus heuristics.
+Earlier components demonstrated sync recovery on Win7 x86, Win7 x64, and Win8.1 x64. **The v1.0 adaptive bundle has not completed Windows runtime regression**; Win8.1 x86 remains untested. This tool is not a browser security update and has not passed a security audit; some launchers were flagged by antivirus heuristics.
 
-[Download v0.3-test7](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v0.3-test7) · [Sources](src/) · [Issues](https://github.com/yuyu107/LegacyEdgeSync/issues)
+[Download v1.0](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v1.0) · [Sources](src/) · [Issues](https://github.com/yuyu107/LegacyEdgeSync/issues)

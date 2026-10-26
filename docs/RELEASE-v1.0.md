@@ -20,7 +20,7 @@ LegacyEdgeSync 通过启动参数和进程内运行时兼容 Hook，在特定 Ed
 
 ## 下载及使用
 
-**附件名称：** `LegacyEdgeSync-v1.0-Win7-Win81-Universal.zip`
+**已发布附件：[LegacyEdgeSync-v1.0-Win7-Win81-Universal.zip](https://github.com/yuyu107/LegacyEdgeSync/releases/download/v1.0/LegacyEdgeSync-v1.0-Win7-Win81-Universal.zip)**（2026-10-26 正式 Release）
 
 1. 在有快照的 Windows 7 SP1 / Windows 8.1 虚拟机中安装 **Microsoft Edge 109.0.1518.140**（x86 或 x64）。
 2. 将 ZIP **完整解压**，运行 `04-Check-Package.cmd` 检查组件，再运行 `03-Diagnose-Architecture.cmd` 检查 Edge 版本和实际位数。
@@ -66,4 +66,4 @@ a4994f4315088057f32b79ae88b31eb7972713b43e0564db695eddda9dde303e  LegacyEdgeSync
 
 ---
 
-**推荐发布设置：** Tag `v1.0`，标题 `LegacyEdgeSync v1.0 — Windows 7/8.1 Edge 109 云同步恢复`。在缺少 v1.0 整包实机回归时，建议勾选 **Set as a pre-release**，并保留以上风险说明。
+**发布状态：** [v1.0 Release 已公开](https://github.com/yuyu107/LegacyEdgeSync/releases/tag/v1.0)（非 Pre-release）；仍保留实验性运行和安全风险提示。
